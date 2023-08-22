@@ -27,7 +27,13 @@ public class EmployeeRestController {
     // expose "/employees/{employeeId}" and return employee
     @GetMapping("/employees/{employeeId}")
     public Employee findEmployeeById(@PathVariable int employeeId) {
-        return employeeService.findById(employeeId);
+        Employee employee =  employeeService.findById(employeeId);
+
+        if (employee == null) {
+            throw new RuntimeException("Employee id not found - " + employeeId);
+        }
+
+        return employee;
     }
 
     // expose "/employees/{employeeId}" for DELETE and return a JSON {"message": "Deleted"}
@@ -35,6 +41,17 @@ public class EmployeeRestController {
     public String deleteEmployeeById(@PathVariable int employeeId) {
         employeeService.delete(employeeId);
         return "Success";
+    }
+
+    @PostMapping("/employees")
+    public Employee addEmployee(@RequestBody Employee employee) {
+
+        // if they pass an id, we force it to be 0 so that we add a new entry rather than updating one.
+        employee.setId(0);
+
+        Employee dbEmployee = employeeService.save(employee);
+
+        return dbEmployee;
     }
 
 }
