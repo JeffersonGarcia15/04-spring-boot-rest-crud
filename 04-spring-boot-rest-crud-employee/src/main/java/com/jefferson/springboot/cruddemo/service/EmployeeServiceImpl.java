@@ -5,6 +5,7 @@ import com.jefferson.springboot.cruddemo.entity.Employee;
 import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -19,8 +20,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public void save(Employee employee) {
-
+    @Transactional // since we are performing an update on the db
+    public Employee save(Employee employee) {
+        return employeeDAO.save(employee);
     }
 
     @Override
@@ -39,7 +41,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    @Transactional
     public void delete(int id) {
-
+        employeeDAO.delete(id);
     }
 }

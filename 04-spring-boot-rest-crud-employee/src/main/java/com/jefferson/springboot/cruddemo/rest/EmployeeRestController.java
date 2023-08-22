@@ -3,10 +3,7 @@ package com.jefferson.springboot.cruddemo.rest;
 import com.jefferson.springboot.cruddemo.entity.Employee;
 import com.jefferson.springboot.cruddemo.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -32,4 +29,12 @@ public class EmployeeRestController {
     public Employee findEmployeeById(@PathVariable int employeeId) {
         return employeeService.findById(employeeId);
     }
+
+    // expose "/employees/{employeeId}" for DELETE and return a JSON {"message": "Deleted"}
+    @DeleteMapping("/employees/{employeeId}")
+    public String deleteEmployeeById(@PathVariable int employeeId) {
+        employeeService.delete(employeeId);
+        return "Success";
+    }
+
 }
