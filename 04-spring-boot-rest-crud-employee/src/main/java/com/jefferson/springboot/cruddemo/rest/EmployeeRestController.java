@@ -39,8 +39,15 @@ public class EmployeeRestController {
     // expose "/employees/{employeeId}" for DELETE and return a JSON {"message": "Deleted"}
     @DeleteMapping("/employees/{employeeId}")
     public String deleteEmployeeById(@PathVariable int employeeId) {
-        employeeService.delete(employeeId);
-        return "Success";
+        // find the employee
+        Employee employee = employeeService.findById(employeeId);
+
+        if (employee == null) {
+            throw new RuntimeException("Employee id not found - " + employeeId);
+        }
+
+        employeeService.delete(employee);
+        return "Deleted employee id - " + employeeId;
     }
 
     @PostMapping("/employees")

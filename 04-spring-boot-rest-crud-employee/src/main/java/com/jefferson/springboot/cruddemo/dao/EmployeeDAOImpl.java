@@ -46,10 +46,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     }
 
     @Override
-    @Transactional // since we are performing an update on the db
-    public void delete(int id) {
-        // find the employee
-        Employee employee = entityManager.find(Employee.class, id);
+    public void delete(Employee employee) {
         // delete the employee
         entityManager.remove(employee);
     }
