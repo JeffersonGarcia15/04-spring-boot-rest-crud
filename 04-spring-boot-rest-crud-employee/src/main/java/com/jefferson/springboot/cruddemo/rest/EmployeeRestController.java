@@ -54,4 +54,10 @@ public class EmployeeRestController {
         return dbEmployee;
     }
 
+    @PutMapping("/employees")
+    public Employee updateEmployee(@RequestBody Employee employee) {
+        return employeeService.update(employee); // we could use the .save method here too.
+        // Since I separated them, then the .save should have been .persist but to reuse we can use .merge.
+    }
+
 }

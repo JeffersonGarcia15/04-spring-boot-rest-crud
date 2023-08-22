@@ -36,8 +36,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public void update(Employee employee) {
-
+    @Transactional // since we are performing an update on the db
+    public Employee update(Employee employee) {
+        return employeeDAO.update(employee);
     }
 
     @Override
